@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RockPaperScissors</string>
+    <string name="playoption">Play</string>
+    <string name="achivementoption">Achievements</string>
+    <string name="creditsoption">Credits</string>
+    <string name="statsoption">Statistics</string>
+
+    <string name="ach_first_win">First Win!</string>
+    <string name="ach_ten_wins">Ten Wins!</string>
+    <string name="ach_played_100_games">Played 100 Games</string>
+</resources>
