@@ -9,14 +9,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:name=".PlayActivity"></activity>
-        <activity android:name=".AchievementActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <activity android:name=".PlayActivity" android:exported="false"></activity>
+        <activity android:name=".AchievementActivity" android:exported="false"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"

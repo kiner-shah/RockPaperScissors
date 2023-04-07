@@ -1,12 +1,13 @@
 package com.example.user.rockpaperscissors;
 
 import android.app.Dialog;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v4.app.NotificationCompat;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -194,6 +199,7 @@ public class PlayActivity extends AppCompatActivity {
                     smiley.setImageResource(R.mipmap.cool_smiley_large);
                 }
                 winLoseStatus.show();
+                sendNotification("Won");
             }
             pscore.setText(String.valueOf(ps));
             cscore.setText(String.valueOf(cs));
@@ -209,15 +215,24 @@ public class PlayActivity extends AppCompatActivity {
     }
     // https://developer.android.com/training/notify-user/build-notification.html
     private void sendNotification(String achievementText) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+        final String CHANNEL_ID = "RPS_CHANNEL_ID_1";
+        final String CHANNEL_NAME = "RPS_ACHIEVEMENTS";
+
+        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+        mNotifyMgr.createNotificationChannel(channel);
+
+        Intent resultIntent = new Intent(this, AchievementActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.game_logo_large)
                 .setContentTitle("Achievement unlocked!")
-                .setContentText(achievementText);
-        Intent resultIntent = new Intent(this, AchievementActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
+                .setContentText(achievementText)
+                .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true);
         int notificationID = 001;
-        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         mNotifyMgr.notify(notificationID, mBuilder.build());
     }
 }
